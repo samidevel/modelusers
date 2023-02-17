@@ -94,3 +94,26 @@ class UpdatePasswordForm(forms.Form):
             'placeholder':'Contraseña nueva'
         }
     ))
+
+
+
+    
+class VerificacionForm(forms.Form):
+    codregistro = forms.CharField(required=True)
+
+    def __init__(self, pk, *args, **kwargs):
+        self.id_user = pk
+        super(VerificacionForm, self).__init__(*args, **kwargs)
+
+    def clean_codregistro(self):
+        codigo = self.cleaned_data['codregistro']
+
+        if len(codigo) == 6:
+            activo=  User.objects.cod_validation(
+                self.id_user,
+                codigo
+            )
+            if not activo:
+                raise forms.ValidationError('Codigo incorrecto')
+        else:
+            raise forms.ValidationError('no son correctos los datos del usaurio')
