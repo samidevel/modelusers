@@ -38,9 +38,7 @@ class UserRegisterForm(forms.ModelForm):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             self.add_error('password2', 'Las cotraseñas no son iguales')
     
-    def clean_password1_password2(self):
-        if self.cleaned_data['password1'] <=6 and self.cleaned_data['password2'] <=6:
-            self.add_error('Las contraseña menor a 6 caracteres')
+ 
 
 
 
